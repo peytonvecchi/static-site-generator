@@ -1,19 +1,16 @@
 from htmlnode import HTMLNode
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag, children, props=None):
+    def __init__(self, tag, children, props=""):
         self.tag = tag
         self.children = children
         self.props = props
         
     def to_html(self):
-        if not self.tag:
-            raise  #how to properly raise a value error
-        
-
-# class LeafNode(HTMLNode):
-#     def __init__(self, tag, value, props=None):
-#         super().__init__(tag, value, props)
-#         self.tag = tag
-#         self.value = value
-#         self.props = props
+        if not self.tag:raise ValueError("tag is None")
+        if not self.children: raise ValueError ("children is None")
+        else:
+            str=""
+            for child in self.children:
+                str += child.to_html()
+            return f"<{self.tag}{self.props}>{str}</{self.tag}>"
