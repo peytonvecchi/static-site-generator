@@ -80,16 +80,18 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
 
     return new_nodes
 
-text_node = TextNode("This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)", text_type=TextType.TEXT)
-def text_to_nodes(text_node):
-    nodes = split_nodes_image([text_node])
-    nodes = split_nodes_link(nodes)
-    nodes = split_nodes_delimiter(nodes, delimiter="**", text_type=TextType.BOLD)
+text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+def text_to_textnodes(text):
+    text_node = TextNode(text, text_type=TextType.TEXT)
+    nodes = split_nodes_delimiter([text_node], delimiter="**", text_type=TextType.BOLD)
     nodes = split_nodes_delimiter(nodes, delimiter="`", text_type=TextType.CODE)
     nodes = split_nodes_delimiter(nodes, delimiter="_", text_type=TextType.ITALIC)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+
     
     # for node in nodes:
     #     print(node)
     return nodes
 
-text_to_nodes(text_node)
+text_to_textnodes(text)
