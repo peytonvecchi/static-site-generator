@@ -80,7 +80,6 @@ def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
 
     return new_nodes
 
-text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 def text_to_textnodes(text):
     text_node = TextNode(text, text_type=TextType.TEXT)
     nodes = split_nodes_delimiter([text_node], delimiter="**", text_type=TextType.BOLD)
@@ -94,4 +93,12 @@ def text_to_textnodes(text):
     #     print(node)
     return nodes
 
-text_to_textnodes(text)
+def markdown_to_blocks(markdown):
+    blocks = []
+    blocks = markdown.split("\n\n")
+    for i in range(0, len(blocks)):
+        blocks[i] = blocks[i].strip()
+        if blocks[i] == '':
+            blocks.remove(blocks[i])
+    print("THIS IS BLICKS", blocks)
+    return blocks
