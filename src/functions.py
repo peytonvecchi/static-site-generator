@@ -88,9 +88,6 @@ def text_to_textnodes(text):
     nodes = split_nodes_image(nodes)
     nodes = split_nodes_link(nodes)
 
-    
-    # for node in nodes:
-    #     print(node)
     return nodes
 
 def markdown_to_blocks(markdown):
@@ -100,5 +97,4 @@ def markdown_to_blocks(markdown):
         blocks[i] = blocks[i].strip()
         if blocks[i] == '':
             blocks.remove(blocks[i])
-    print("THIS IS BLICKS", blocks)
     return blocks
