@@ -22,7 +22,12 @@ def get_value(block_string: str, block_type: BlockType) -> str:
         
 def text_to_children(text: str) -> list:
     text_nodes = text_to_textnodes(text)
-    print(text_nodes)
+    children = []
+    for i in range(0, len(text_nodes)):
+        child_html_node = text_node_to_html_node(text_nodes[i])
+        children.append(child_html_node)
+    return children
+
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
@@ -39,7 +44,7 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_children = text_to_children(html_value)
                 print("val:", html_value)
                 print("head", html_heading_num)
-                html_node = ParentNode(tag=f"h{html_heading_num}", children=None, props=None)
+                html_node = ParentNode(tag=f"h{html_heading_num}", children=html_children, props=None)
 
         
             
