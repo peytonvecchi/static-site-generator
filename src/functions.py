@@ -88,6 +88,9 @@ def text_to_textnodes(text):
     nodes = split_nodes_image(nodes)
     nodes = split_nodes_link(nodes)
 
+    if nodes[len(nodes) - 1].text == "":
+        nodes.pop()
+
     return nodes
 
 def markdown_to_blocks(markdown):
