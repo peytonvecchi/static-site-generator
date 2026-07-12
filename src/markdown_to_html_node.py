@@ -26,6 +26,7 @@ def text_to_children(text: str) -> list:
     for i in range(0, len(text_nodes)):
         child_html_node = text_node_to_html_node(text_nodes[i])
         children.append(child_html_node)
+    print("children:", children)
     return children
 
 
