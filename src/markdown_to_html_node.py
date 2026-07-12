@@ -46,6 +46,9 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 print("head", html_heading_num)
                 html_node = ParentNode(tag=f"h{html_heading_num}", children=html_children, props=None)
 
+# TODO: Finish rest of ParentNode creation based on the other block types. Do Code block last. Should be easier now that we have a better understanding of the code
+# Tip BlockType = ParentNode, which is a kind of HTML node. TextType = LeafNode, which is a kind of HTML node. 
+
         
             
         
