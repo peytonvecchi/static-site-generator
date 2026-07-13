@@ -60,8 +60,20 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_children = text_to_children(block)
                 html_node = ParentNode(tag="blockquote", children=html_children, props=None)
             case BlockType.UNORDERED_LIST:
-                print("ul block", block)
-                html_children = text_to_children(block)
+                print("ul block", block) 
+                ul_children = block.splitlines()
+                num_of_li_nodes = len(ul_children)
+                li_nodes = []
+                for i in range(0, num_of_li_nodes):
+                    ul_children[i] = get_value(block_string=ul_children[i], block_type=block_type)
+                    ul_children[i] = text_to_children(ul_children[i])
+                for i in range(0, num_of_li_nodes):
+                    li_node = ParentNode(tag="li", children=ul_children[i], props=None)
+                    li_nodes.append(li_node)
+                print("ul_children", ul_children)
+                print("ul_children_len", len(ul_children))
+                for child in li_nodes:
+                    print(child)
 
                 
 
@@ -99,6 +111,6 @@ md4 = "[link](https://link.net)"
 
 md5 = "![image](https://image.com)"
 
-md6 = "- This\n- That\n- And the other"
+md6 = "- This\n- That\n- And the **bold**"
 
 markdown_to_html_node(md6)
