@@ -19,6 +19,10 @@ def get_value(block_string: str, block_type: BlockType) -> str:
     match block_type:
         case BlockType.HEADING:
             return block_string.replace("#", "").strip()
+        case BlockType.QUOTE:
+            return block_string.replace(">", "").strip()
+        case BlockType.UNORDERED_LIST:
+            return block_string.replace("- ", "").strip()
         
 def text_to_children(text: str) -> list:
     text_nodes = text_to_textnodes(text)
@@ -46,9 +50,24 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 print("val:", html_value)
                 print("head", html_heading_num)
                 html_node = ParentNode(tag=f"h{html_heading_num}", children=html_children, props=None)
+            case BlockType.PARAGRAH:
+                print("paragraph BLCOK", block)
+                html_children = text_to_children(block)
+                html_node = ParentNode(tag="p", children=html_children, props=None)
+            case BlockType.QUOTE:
+                print("quote block", block)
+                html_value = get_value(block_string=block, block_type=block_type)
+                html_children = text_to_children(block)
+                html_node = ParentNode(tag="blockquote", children=html_children, props=None)
+            case BlockType.UNORDERED_LIST:
+                print("ul block", block)
+                html_children = text_to_children(block)
 
-# TODO: Finish rest of ParentNode creation based on the other block types. Do Code block last. Should be easier now that we have a better understanding of the code
-# Tip BlockType = ParentNode, which is a kind of HTML node. TextType = LeafNode, which is a kind of HTML node. 
+                
+
+# TODO: Finish UNORDERED_LIST, ORDERED_LIST, and CODE
+# Tip: BlockType = ParentNode, which is a kind of HTML node. TextType = LeafNode, which is a kind of HTML node. 
+# Tip 2: unordered list should be a parent node, so should the li of the ul, the li should then contain a leaf. so it's parent(ul)->parent(li)->parent(actual text) 
 
         
             
@@ -72,4 +91,14 @@ _italics_
 
 md1 = "# Header **this** is _italic_"
 
-markdown_to_html_node(md1)
+md2 = "paragraph is yeah plus **bold**"
+
+md3 = "> Quote is _italic_"
+
+md4 = "[link](https://link.net)"
+
+md5 = "![image](https://image.com)"
+
+md6 = "- This\n- That\n- And the other"
+
+markdown_to_html_node(md6)
