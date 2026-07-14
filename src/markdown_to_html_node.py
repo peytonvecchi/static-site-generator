@@ -23,6 +23,8 @@ def get_value(block_string: str, block_type: BlockType) -> str:
             return block_string.replace(">", "").strip()
         case BlockType.UNORDERED_LIST:
             return block_string.replace("- ", "").strip()
+        case BlockType.ORDERED_LIST:
+            return block_string[2:].strip()
         
 def text_to_children(text: str) -> list:
     text_nodes = text_to_textnodes(text)
@@ -59,25 +61,37 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_value = get_value(block_string=block, block_type=block_type)
                 html_children = text_to_children(block)
                 html_node = ParentNode(tag="blockquote", children=html_children, props=None)
-            case BlockType.UNORDERED_LIST:
+            case BlockType.UNORDERED_LIST | BlockType.ORDERED_LIST as list_type:
                 print("ul block", block) 
-                ul_children = block.splitlines()
-                num_of_li_nodes = len(ul_children)
+                list_children = block.splitlines()
+                num_of_li_nodes = len(list_children)
                 li_nodes = []
                 for i in range(0, num_of_li_nodes):
-                    ul_children[i] = get_value(block_string=ul_children[i], block_type=block_type)
-                    ul_children[i] = text_to_children(ul_children[i])
+                    list_children[i] = get_value(block_string=list_children[i], block_type=block_type)
+                    print("current_child", list_children[i])
+                    list_children[i] = text_to_children(list_children[i])
                 for i in range(0, num_of_li_nodes):
-                    li_node = ParentNode(tag="li", children=ul_children[i], props=None)
+                    li_node = ParentNode(tag="li", children=list_children[i], props=None)
                     li_nodes.append(li_node)
-                print("ul_children", ul_children)
-                print("ul_children_len", len(ul_children))
-                for child in li_nodes:
-                    print(child)
+                # print("ul_children", ul_children)
+                # print("ul_children_len", len(ul_children))
+                # for child in li_nodes:
+                #     print(child)
+                if list_type is BlockType.UNORDERED_LIST:
+                    parent_node_tag = "ul"
+                elif list_type is BlockType.ORDERED_LIST:
+                    parent_node_tag = "ol"
+                html_node = ParentNode(tag=parent_node_tag, children=li_nodes, props=None)
+                print(html_node)
+            case BlockType.CODE:
+                text_node = TextNode(text=block, text_type=TextType.CODE)
+                #finish this
+
+
 
                 
 
-# TODO: Finish UNORDERED_LIST, ORDERED_LIST, and CODE
+# TODO: CODE
 # Tip: BlockType = ParentNode, which is a kind of HTML node. TextType = LeafNode, which is a kind of HTML node. 
 # Tip 2: unordered list should be a parent node, so should the li of the ul, the li should then contain a leaf. so it's parent(ul)->parent(li)->parent(actual text) 
 
@@ -111,6 +125,6 @@ md4 = "[link](https://link.net)"
 
 md5 = "![image](https://image.com)"
 
-md6 = "- This\n- That\n- And the **bold**"
+md6 = "1. This\n2. That\n3. And the **bold**"
 
 markdown_to_html_node(md6)
