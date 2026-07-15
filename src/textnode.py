@@ -27,7 +27,7 @@ def text_node_to_html_node(text_node: TextNode) -> LeafNode:
         raise Exception("text_type is not in TextType Enum")
     else:
         match text_node.text_type:
-            case TextType.TEXT:
+            case TextType.TEXT | TextType.CODE:
                 return LeafNode(value=text_node.text)
             case TextType.BOLD:
                 return LeafNode(tag="b", value=text_node.text)

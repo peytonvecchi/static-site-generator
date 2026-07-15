@@ -11,7 +11,7 @@ class BlockType (Enum):
 def block_to_block_type(block_of_mardown_text: str) -> BlockType:
     if "#" in block_of_mardown_text[0]:
         return BlockType.HEADING
-    elif "```\n" in block_of_mardown_text[:4] and "```" in block_of_mardown_text[-3:]:
+    elif "```" in block_of_mardown_text[:4] and "```" in block_of_mardown_text[-3:]:
         return BlockType.CODE
     elif ">" in block_of_mardown_text[0]:
         list_of_mardown_text = block_of_mardown_text.splitlines()

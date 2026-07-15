@@ -25,6 +25,8 @@ def get_value(block_string: str, block_type: BlockType) -> str:
             return block_string.replace("- ", "").strip()
         case BlockType.ORDERED_LIST:
             return block_string[2:].strip()
+        case BlockType.CODE:
+            return block_string.replace("```", "")
         
 def text_to_children(text: str) -> list:
     text_nodes = text_to_textnodes(text)
@@ -73,10 +75,6 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 for i in range(0, num_of_li_nodes):
                     li_node = ParentNode(tag="li", children=list_children[i], props=None)
                     li_nodes.append(li_node)
-                # print("ul_children", ul_children)
-                # print("ul_children_len", len(ul_children))
-                # for child in li_nodes:
-                #     print(child)
                 if list_type is BlockType.UNORDERED_LIST:
                     parent_node_tag = "ul"
                 elif list_type is BlockType.ORDERED_LIST:
@@ -84,20 +82,13 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_node = ParentNode(tag=parent_node_tag, children=li_nodes, props=None)
                 print(html_node)
             case BlockType.CODE:
-                text_node = TextNode(text=block, text_type=TextType.CODE)
-                #finish this
-
-
-
-                
-
-# TODO: CODE
-# Tip: BlockType = ParentNode, which is a kind of HTML node. TextType = LeafNode, which is a kind of HTML node. 
-# Tip 2: unordered list should be a parent node, so should the li of the ul, the li should then contain a leaf. so it's parent(ul)->parent(li)->parent(actual text) 
-
-        
-            
-        
+                print("CODE", block)
+                html_value = get_value(block_string=block, block_type=block_type)
+                text_node = TextNode(text=html_value, text_type=TextType.CODE)
+                text_to_html = text_node_to_html_node(text_node)
+                pre_html_node = ParentNode(tag="pre", children=text_to_html, props=None)
+                html_node = ParentNode(tag="code", children=pre_html_node, props=None)
+                print("PARETN CODE HTML", html_node)
 
 
 md = """# Header
@@ -127,4 +118,6 @@ md5 = "![image](https://image.com)"
 
 md6 = "1. This\n2. That\n3. And the **bold**"
 
-markdown_to_html_node(md6)
+md7 = "```this is some _code_ **block**```"
+
+markdown_to_html_node(md7)
