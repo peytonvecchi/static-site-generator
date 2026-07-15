@@ -41,7 +41,7 @@ def text_to_children(text: str) -> list:
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
     print("markdown block:", markdown_blocks)
-    html = ""
+    html_child_blocks = []
     for block in markdown_blocks:
 
         block_type = block_to_block_type(block)
@@ -51,44 +51,40 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_value = get_value(block_string=block, block_type=block_type) 
                 html_heading_num = get_heading_num(block)
                 html_children = text_to_children(html_value)
-                print("val:", html_value)
-                print("head", html_heading_num)
-                html_node = ParentNode(tag=f"h{html_heading_num}", children=html_children, props=None)
+                html_node = ParentNode(tag=f"h{html_heading_num}", children=html_children)
             case BlockType.PARAGRAH:
-                print("paragraph BLCOK", block)
                 html_children = text_to_children(block)
-                html_node = ParentNode(tag="p", children=html_children, props=None)
+                html_node = ParentNode(tag="p", children=html_children)
             case BlockType.QUOTE:
-                print("quote block", block)
                 html_value = get_value(block_string=block, block_type=block_type)
                 html_children = text_to_children(block)
-                html_node = ParentNode(tag="blockquote", children=html_children, props=None)
+                html_node = ParentNode(tag="blockquote", children=html_children)
             case BlockType.UNORDERED_LIST | BlockType.ORDERED_LIST as list_type:
-                print("ul block", block) 
                 list_children = block.splitlines()
                 num_of_li_nodes = len(list_children)
                 li_nodes = []
                 for i in range(0, num_of_li_nodes):
                     list_children[i] = get_value(block_string=list_children[i], block_type=block_type)
-                    print("current_child", list_children[i])
                     list_children[i] = text_to_children(list_children[i])
                 for i in range(0, num_of_li_nodes):
-                    li_node = ParentNode(tag="li", children=list_children[i], props=None)
+                    li_node = ParentNode(tag="li", children=list_children[i])
                     li_nodes.append(li_node)
                 if list_type is BlockType.UNORDERED_LIST:
                     parent_node_tag = "ul"
                 elif list_type is BlockType.ORDERED_LIST:
                     parent_node_tag = "ol"
-                html_node = ParentNode(tag=parent_node_tag, children=li_nodes, props=None)
-                print(html_node)
+                html_node = ParentNode(tag=parent_node_tag, children=li_nodes)
             case BlockType.CODE:
-                print("CODE", block)
                 html_value = get_value(block_string=block, block_type=block_type)
                 text_node = TextNode(text=html_value, text_type=TextType.CODE)
                 text_to_html = text_node_to_html_node(text_node)
-                pre_html_node = ParentNode(tag="pre", children=text_to_html, props=None)
-                html_node = ParentNode(tag="code", children=pre_html_node, props=None)
-                print("PARETN CODE HTML", html_node)
+                pre_html_node = ParentNode(tag="pre", children=text_to_html)
+                html_node = ParentNode(tag="code", children=pre_html_node)
+        html_child_blocks.append(html_node)
+    html_parent_block = ParentNode(tag="div", children=html_child_blocks)
+    print("HTML PARENT BLOCK\n\n", html_parent_block.to_html())
+
+# TODO: FIX HTML RENDERING BUG WITH ALL THE PARAGRAPH TAGS
 
 
 md = """# Header
@@ -120,4 +116,4 @@ md6 = "1. This\n2. That\n3. And the **bold**"
 
 md7 = "```this is some _code_ **block**```"
 
-markdown_to_html_node(md7)
+markdown_to_html_node(md)
