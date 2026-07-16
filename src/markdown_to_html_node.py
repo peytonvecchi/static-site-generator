@@ -116,4 +116,13 @@ md6 = "1. This\n2. That\n3. And the **bold**"
 
 md7 = "```this is some _code_ **block**```"
 
-markdown_to_html_node(md)
+md8 = """
+This is **bolded** paragraph
+text in a p
+tag here
+
+This is another paragraph with _italic_ text ```code``` here
+
+"""
+
+markdown_to_html_node(md8)
