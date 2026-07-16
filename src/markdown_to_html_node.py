@@ -26,7 +26,7 @@ def get_value(block_string: str, block_type: BlockType) -> str:
         case BlockType.ORDERED_LIST:
             return block_string[2:].strip()
         case BlockType.CODE:
-            return block_string.replace("```", "")
+            return block_string.replace("```", "").strip()
         
 def text_to_children(text: str) -> list:
     print("INPUT STRING FOR TEXT NODES", text)
