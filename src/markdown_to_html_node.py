@@ -29,7 +29,9 @@ def get_value(block_string: str, block_type: BlockType) -> str:
             return block_string.replace("```", "")
         
 def text_to_children(text: str) -> list:
+    print("INPUT STRING FOR TEXT NODES", text)
     text_nodes = text_to_textnodes(text)
+    print("TEXT NODES", text_nodes)
     children = []
     for i in range(0, len(text_nodes)):
         child_html_node = text_node_to_html_node(text_nodes[i])
@@ -125,7 +127,7 @@ This is **bolded** paragraph
 text in a p
 tag here
 
-This is another paragraph with _italic_ text ```code``` here
+This is another paragraph with _italic_ text `code` here
 
 """
 
