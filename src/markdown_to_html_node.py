@@ -42,8 +42,8 @@ def text_to_children(text: str) -> list:
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
-    for i in range(0, len(markdown_blocks)):
-        markdown_blocks[i] = markdown_blocks[i].replace("\n", "")
+    # for i in range(0, len(markdown_blocks)):
+    #     markdown_blocks[i] = markdown_blocks[i].replace("\n", "")
 
     print("markdown block:", markdown_blocks)
     html_child_blocks = []
@@ -86,11 +86,14 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 text_to_html = text_node_to_html_node(text_node)
                 pre_html_node = ParentNode(tag="pre", children=text_to_html)
                 html_node = ParentNode(tag="code", children=pre_html_node)
+        for element in html_node.children:
+            print("ELEMENT", element.children[0].value) #<-- pick up here for TODO, inline code works, but I should strip the newlines at the end...current line doesn't work for multiple child entries
         html_child_blocks.append(html_node)
     html_parent_block = ParentNode(tag="div", children=html_child_blocks)
     print("HTML PARENT BLOCK\n\n", html_parent_block.to_html())
 
-# TODO: MAKE MD8 PRINT OUT ALL NICE AND AS IT SHOULD BE, IT IS CURRENTLY WRONG!!!!!!!!!!!!!!!!!
+# TODO: STRIP NEWLINES RIGHT BEFORE CREATING THE GRANDFATHER PARENT NODE
+# TODO: FIX CODE BLOCK TO HTML
 
 
 md = """# Header
@@ -131,4 +134,4 @@ This is another paragraph with _italic_ text `code` here
 
 """
 
-markdown_to_html_node(md8)
+markdown_to_html_node(md6)
