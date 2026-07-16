@@ -84,7 +84,7 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
     html_parent_block = ParentNode(tag="div", children=html_child_blocks)
     print("HTML PARENT BLOCK\n\n", html_parent_block.to_html())
 
-# TODO: FIX HTML RENDERING BUG WITH ALL THE PARAGRAPH TAGS
+# TODO: MAKE MD8 PRINT OUT ALL NICE AND AS IT SHOULD BE, IT IS CURRENTLY WRONG!!!!!!!!!!!!!!!!!
 
 
 md = """# Header
