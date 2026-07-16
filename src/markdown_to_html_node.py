@@ -40,6 +40,9 @@ def text_to_children(text: str) -> list:
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
+    for i in range(0, len(markdown_blocks)):
+        markdown_blocks[i] = markdown_blocks[i].replace("\n", "")
+
     print("markdown block:", markdown_blocks)
     html_child_blocks = []
     for block in markdown_blocks:
@@ -75,6 +78,7 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                     parent_node_tag = "ol"
                 html_node = ParentNode(tag=parent_node_tag, children=li_nodes)
             case BlockType.CODE:
+                print(r"%%%%%%%%%%%%%%%%%%%%%%%")
                 html_value = get_value(block_string=block, block_type=block_type)
                 text_node = TextNode(text=html_value, text_type=TextType.CODE)
                 text_to_html = text_node_to_html_node(text_node)
