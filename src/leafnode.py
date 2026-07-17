@@ -8,13 +8,16 @@ class LeafNode(HTMLNode):
         self.props = props
     
     def to_html(self):
+        if self.tag != "code":
+            self.value = self.value.replace("\n", " ")
         props_in_html = ""
         if self.value == None: raise ValueError
         if self.tag == None: return self.value
         else: 
             if self.props:
                 props_in_html += self.props_to_html()
-        return f"<{self.tag}{props_in_html}>{self.value}</{self.tag}>".replace("\n", "")
+        html_string = f"<{self.tag}{props_in_html}>{self.value}</{self.tag}>"
+        return html_string
     
     def __repr__(self):
         return f"LeafNode, tag: {self.tag}, value: {self.value}, props {self.props}"

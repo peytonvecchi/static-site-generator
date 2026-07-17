@@ -6,7 +6,7 @@ class ParentNode(HTMLNode):
         self.children = children
         self.props = props
         
-    def to_html(self):
+    def to_html(self, leave_newlines=None):
         if not self.tag:raise ValueError("tag is None")
         if not self.children: raise ValueError ("children is None")
         else:
@@ -16,7 +16,8 @@ class ParentNode(HTMLNode):
                     str += child.to_html()
             else:
                 str += self.children.to_html()
-            return f"<{self.tag}{self.props}>{str}</{self.tag}>".replace("\n", "")
+        html_string = f"<{self.tag}{self.props}>{str}</{self.tag}>"
+        return html_string
         
     def __repr__(self):
         return f"ParentNode, tag: {self.tag}, children: {self.children}, props {self.props}"

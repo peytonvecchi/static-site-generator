@@ -26,7 +26,7 @@ def get_value(block_string: str, block_type: BlockType) -> str:
         case BlockType.ORDERED_LIST:
             return block_string[2:].strip()
         case BlockType.CODE:
-            return block_string.replace("```", "").strip()
+            return block_string.replace("```", "")
         
 def text_to_children(text: str) -> list:
     text_nodes = text_to_textnodes(text)
@@ -79,49 +79,45 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_node = ParentNode(tag="pre", children=text_to_html)
         html_child_blocks.append(html_node)
     html_parent_block = ParentNode(tag="div", children=html_child_blocks)
-    print("\nhtml string:\n", html_parent_block.to_html())
+    
     return html_parent_block
 
-# TODO: STRIP NEWLINES RIGHT BEFORE CREATING THE GRANDFATHER PARENT NODE
-# TODO: FIX CODE BLOCK TO HTML
+# md = """# Header
 
+# Paragraph
 
-md = """# Header
+# - List item
+# - List item
 
-Paragraph
+# [link](https://link)
 
-- List item
-- List item
+# ![image](https://image)
 
-[link](https://link)
+# _italics_
 
-![image](https://image)
+# **bold**"""
 
-_italics_
+# md1 = "# Header **this** is _italic_"
 
-**bold**"""
+# md2 = "paragraph is yeah plus **bold**"
 
-md1 = "# Header **this** is _italic_"
+# md3 = "> Quote is _italic_"
 
-md2 = "paragraph is yeah plus **bold**"
+# md4 = "[link](https://link.net)"
 
-md3 = "> Quote is _italic_"
+# md5 = "![image](https://image.com)"
 
-md4 = "[link](https://link.net)"
+# md6 = "1. This\n2. That\n3. And the **bold**"
 
-md5 = "![image](https://image.com)"
+# md7 = "```this is some _code_ **block**```"
 
-md6 = "1. This\n2. That\n3. And the **bold**"
+# md8 = """
+# This is **bolded** paragraph
+# text in a p
+# tag here
 
-md7 = "```this is some _code_ **block**```"
+# This is another paragraph with _italic_ text `code` here
 
-md8 = """
-This is **bolded** paragraph
-text in a p
-tag here
+# """
 
-This is another paragraph with _italic_ text `code` here
-
-"""
-
-markdown_to_html_node(md5)
+# markdown_to_html_node(md5)
