@@ -39,8 +39,7 @@ def text_to_children(text: str) -> list:
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
-
-    print("markdown block:", markdown_blocks)
+    print("markdown string:\n", markdown)
     html_child_blocks = []
     for block in markdown_blocks:
 
@@ -78,24 +77,10 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 text_node = TextNode(text=html_value, text_type=TextType.CODE)
                 text_to_html = text_node_to_html_node(text_node)
                 html_node = ParentNode(tag="pre", children=text_to_html)
-                # html_node = ParentNode(tag="code", children=pre_html_node)
-        # if html_node.tag == "code":
-        #     html_node.tag.children.children.value = html_node.tag.children.children.value.replace("\n", "")
-        # elif html_node.tag == "pre":
-        #     html_node.children.value = html_node.children.value.replace("\n", "")
-        # elif html_node.children[0].tag != "a":
-        #     print("HTML NODE CHILDREN", html_node.children)
-        #     for i in range(0, len(html_node.children)):
-        #         if html_node.children[i].children:
-        #             print("NOOOO", html_node.children[i].children)
-        #             for j in range(0, len(html_node.children[i].children)):
-        #                 print("AHHHHHH", html_node.children[i])
-        #                 html_node.children[i].children[j].value = html_node.children[i].children[j].value.replace("\n", "")
-        #         else:
-        #             html_node.children[i].value = html_node.children[i].value.replace("\n", "")
         html_child_blocks.append(html_node)
     html_parent_block = ParentNode(tag="div", children=html_child_blocks)
-    print("HTML PARENT BLOCK\n\n", html_parent_block.to_html())
+    print("\nhtml string:\n", html_parent_block.to_html())
+    return html_parent_block
 
 # TODO: STRIP NEWLINES RIGHT BEFORE CREATING THE GRANDFATHER PARENT NODE
 # TODO: FIX CODE BLOCK TO HTML
@@ -139,4 +124,4 @@ This is another paragraph with _italic_ text `code` here
 
 """
 
-markdown_to_html_node(md3)
+markdown_to_html_node(md5)
