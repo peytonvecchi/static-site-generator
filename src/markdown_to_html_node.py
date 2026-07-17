@@ -3,7 +3,6 @@ from functions import markdown_to_blocks, text_to_textnodes
 from block import BlockType, block_to_block_type
 from htmlnode import HTMLNode
 from parentnode import ParentNode
-from leafnode import LeafNode
 from textnode import TextNode, TextType, text_node_to_html_node 
 
 def get_heading_num(heading: str) -> int:
@@ -81,43 +80,3 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
     html_parent_block = ParentNode(tag="div", children=html_child_blocks)
     
     return html_parent_block
-
-# md = """# Header
-
-# Paragraph
-
-# - List item
-# - List item
-
-# [link](https://link)
-
-# ![image](https://image)
-
-# _italics_
-
-# **bold**"""
-
-# md1 = "# Header **this** is _italic_"
-
-# md2 = "paragraph is yeah plus **bold**"
-
-# md3 = "> Quote is _italic_"
-
-# md4 = "[link](https://link.net)"
-
-# md5 = "![image](https://image.com)"
-
-# md6 = "1. This\n2. That\n3. And the **bold**"
-
-# md7 = "```this is some _code_ **block**```"
-
-# md8 = """
-# This is **bolded** paragraph
-# text in a p
-# tag here
-
-# This is another paragraph with _italic_ text `code` here
-
-# """
-
-# markdown_to_html_node(md5)
