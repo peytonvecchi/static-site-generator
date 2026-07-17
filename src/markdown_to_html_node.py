@@ -38,7 +38,6 @@ def text_to_children(text: str) -> list:
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
-    print("markdown string:\n", markdown)
     html_child_blocks = []
     for block in markdown_blocks:
 
