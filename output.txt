@@ -1,0 +1,30 @@
+markdown block: ['This is **bolded** paragraph\ntext in a p\ntag here', 'This is another paragraph with _italic_ text `code` here']
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is , props None, LeafNode, tag: b, value: bolded, props None, LeafNode, tag: None, value:  paragraph
+text in a p
+tag here, props None], props 
+This is 
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is, props None, LeafNode, tag: b, value: bolded, props None, LeafNode, tag: None, value:  paragraph
+text in a p
+tag here, props None], props 
+bolded
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is, props None, LeafNode, tag: b, value: bolded, props None, LeafNode, tag: None, value:  paragraph
+text in a p
+tag here, props None], props 
+ paragraph
+text in a p
+tag here
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is another paragraph with , props None, LeafNode, tag: i, value: italic, props None, LeafNode, tag: None, value:  text , props None, LeafNode, tag: code, value: code, props None, LeafNode, tag: None, value:  here, props None], props 
+This is another paragraph with 
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is another paragraph with, props None, LeafNode, tag: i, value: italic, props None, LeafNode, tag: None, value:  text , props None, LeafNode, tag: code, value: code, props None, LeafNode, tag: None, value:  here, props None], props 
+italic
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is another paragraph with, props None, LeafNode, tag: i, value: italic, props None, LeafNode, tag: None, value:  text , props None, LeafNode, tag: code, value: code, props None, LeafNode, tag: None, value:  here, props None], props 
+ text 
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is another paragraph with, props None, LeafNode, tag: i, value: italic, props None, LeafNode, tag: None, value: text, props None, LeafNode, tag: code, value: code, props None, LeafNode, tag: None, value:  here, props None], props 
+code
+ParentNode, tag: p, children: [LeafNode, tag: None, value: This is another paragraph with, props None, LeafNode, tag: i, value: italic, props None, LeafNode, tag: None, value: text, props None, LeafNode, tag: code, value: code, props None, LeafNode, tag: None, value:  here, props None], props 
+ here
+HTML PARENT BLOCK
+
+ <div><p>This is<b>bolded</b>paragraph
+text in a p
+tag here</p><p>This is another paragraph with<i>italic</i>text<code>code</code>here</p></div>

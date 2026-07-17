@@ -11,9 +11,12 @@ class ParentNode(HTMLNode):
         if not self.children: raise ValueError ("children is None")
         else:
             str=""
-            for child in self.children:
-                str += child.to_html()
-            return f"<{self.tag}{self.props}>{str}</{self.tag}>"
+            if isinstance(self.children, list):
+                for child in self.children:
+                    str += child.to_html()
+            else:
+                str += self.children.to_html()
+            return f"<{self.tag}{self.props}>{str}</{self.tag}>".replace("\n", "")
         
     def __repr__(self):
         return f"ParentNode, tag: {self.tag}, children: {self.children}, props {self.props}"

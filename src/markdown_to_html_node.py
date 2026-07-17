@@ -29,28 +29,22 @@ def get_value(block_string: str, block_type: BlockType) -> str:
             return block_string.replace("```", "").strip()
         
 def text_to_children(text: str) -> list:
-    print("INPUT STRING FOR TEXT NODES", text)
     text_nodes = text_to_textnodes(text)
-    print("TEXT NODES", text_nodes)
     children = []
     for i in range(0, len(text_nodes)):
         child_html_node = text_node_to_html_node(text_nodes[i])
         children.append(child_html_node)
-    print("children:", children)
     return children
 
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
     markdown_blocks = markdown_to_blocks(markdown)
-    # for i in range(0, len(markdown_blocks)):
-    #     markdown_blocks[i] = markdown_blocks[i].replace("\n", "")
 
     print("markdown block:", markdown_blocks)
     html_child_blocks = []
     for block in markdown_blocks:
 
         block_type = block_to_block_type(block)
-        print("block type:", block_type)
         match block_type:
             case BlockType.HEADING:
                 html_value = get_value(block_string=block, block_type=block_type) 
@@ -80,14 +74,25 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                     parent_node_tag = "ol"
                 html_node = ParentNode(tag=parent_node_tag, children=li_nodes)
             case BlockType.CODE:
-                print(r"%%%%%%%%%%%%%%%%%%%%%%%")
                 html_value = get_value(block_string=block, block_type=block_type)
                 text_node = TextNode(text=html_value, text_type=TextType.CODE)
                 text_to_html = text_node_to_html_node(text_node)
-                pre_html_node = ParentNode(tag="pre", children=text_to_html)
-                html_node = ParentNode(tag="code", children=pre_html_node)
-        for element in html_node.children:
-            print("ELEMENT", element.children[0].value) #<-- pick up here for TODO, inline code works, but I should strip the newlines at the end...current line doesn't work for multiple child entries
+                html_node = ParentNode(tag="pre", children=text_to_html)
+                # html_node = ParentNode(tag="code", children=pre_html_node)
+        # if html_node.tag == "code":
+        #     html_node.tag.children.children.value = html_node.tag.children.children.value.replace("\n", "")
+        # elif html_node.tag == "pre":
+        #     html_node.children.value = html_node.children.value.replace("\n", "")
+        # elif html_node.children[0].tag != "a":
+        #     print("HTML NODE CHILDREN", html_node.children)
+        #     for i in range(0, len(html_node.children)):
+        #         if html_node.children[i].children:
+        #             print("NOOOO", html_node.children[i].children)
+        #             for j in range(0, len(html_node.children[i].children)):
+        #                 print("AHHHHHH", html_node.children[i])
+        #                 html_node.children[i].children[j].value = html_node.children[i].children[j].value.replace("\n", "")
+        #         else:
+        #             html_node.children[i].value = html_node.children[i].value.replace("\n", "")
         html_child_blocks.append(html_node)
     html_parent_block = ParentNode(tag="div", children=html_child_blocks)
     print("HTML PARENT BLOCK\n\n", html_parent_block.to_html())
@@ -134,4 +139,4 @@ This is another paragraph with _italic_ text `code` here
 
 """
 
-markdown_to_html_node(md6)
+markdown_to_html_node(md3)
