@@ -1,9 +1,31 @@
-from textnode import TextNode, TextType
+from pathlib import Path
+import shutil
+
+def copy_static_to_public(static, public):
+    # for loop to delete contents of public directory
+    for item in public.iterdir():
+        if item.is_file():
+            item.unlink()
+        elif item.is_dir():
+            shutil.rmtree(item)
 
 def main():
-    print("Running...")
-    text_node = TextNode('This is some anchor text', TextType.LINK, 'https://www.boot.dev')
-    print(text_node)
+    # __file__ is a built in variable that automatically holds the path of the current .py script "main.py" in this case.
+    # .resolve() Finds the aboslute, real path on your hard drive. It removes any confusing shortcuts or temporary locations.
+    # .parent Grabs the folder that CONTAINS your script
+    # So the Path object we just created is a path to SRC
+    script_dir = Path(__file__).resolve().parent
+
+    # creates a Path object by using the / operator, which detects that script_dir is a path object and appends the .. and static or public locations onto the script_dir path
+    # This ensures the Path objects are created using the absolute path to each respective directory. The / operator also forms the paths dynamically, meaning it will work on 
+    # Windows, MAC, or Linux. .resolve() looks at the folder path with the .. inside it and actually PROCCESSES the "cd .." on your hard drive
+    # This is so the final path becomes a clean, direct line
+    STATIC_DIR = (script_dir / ".." / "static").resolve()
+    PUBLIC_DIR = (script_dir / ".." / "public").resolve()
+    copy_static_to_public(static=STATIC_DIR, public=PUBLIC_DIR)
+
+
+    
 
 if __name__ == "__main__":
     main()
