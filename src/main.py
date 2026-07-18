@@ -6,7 +6,6 @@ import shutil
 def copy_static_to_public(static: Path, public: Path, public_deleted=False):
 
     if len(os.listdir(public)) > 0 and public_deleted == False:
-        print("Deleting public files...")
         delete_public_files(public)
         copy_static_to_public(static, public, public_deleted=True)
     else:
@@ -18,6 +17,7 @@ def copy_static_to_public(static: Path, public: Path, public_deleted=False):
                 shutil.copy(item, item_copy)
             elif item.is_dir():
                 os.mkdir(item_copy)
+                copy_static_to_public(item, item_copy, public_deleted=True)
 
 def delete_public_files(public):
 
