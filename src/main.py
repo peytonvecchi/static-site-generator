@@ -5,6 +5,9 @@ import shutil
 
 def copy_static_to_public(static: Path, public: Path, public_deleted=False):
 
+    if os.path.exists(public) == False:
+        os.mkdir(public)
+    
     if len(os.listdir(public)) > 0 and public_deleted == False:
         delete_public_files(public)
         copy_static_to_public(static, public, public_deleted=True)
