@@ -1,8 +1,26 @@
+import os
 from pathlib import Path
 import shutil
 
-def copy_static_to_public(static, public):
-    # for loop to delete contents of public directory
+
+def copy_static_to_public(static: Path, public: Path, public_deleted=False):
+
+    if len(os.listdir(public)) > 0 and public_deleted == False:
+        print("Deleting public files...")
+        delete_public_files(public)
+        copy_static_to_public(static, public, public_deleted=True)
+    else:
+        for item in static.iterdir():
+
+            # example item_copy print: /home/peyton/Workspace/code/static-site-generator/public/index.css
+            item_copy = (item.parents[1] / public / item.name)
+            if item.is_file():
+                shutil.copy(item, item_copy)
+            elif item.is_dir():
+                os.mkdir(item_copy)
+
+def delete_public_files(public):
+
     for item in public.iterdir():
         if item.is_file():
             item.unlink()
@@ -23,6 +41,8 @@ def main():
     STATIC_DIR = (script_dir / ".." / "static").resolve()
     PUBLIC_DIR = (script_dir / ".." / "public").resolve()
     copy_static_to_public(static=STATIC_DIR, public=PUBLIC_DIR)
+
+
 
 
     
