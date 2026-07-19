@@ -78,8 +78,8 @@ def main():
     FROM_PATH = (script_dir / ".." / "content" / "index.md").resolve()
     TEMPLATE_PATH = (script_dir / ".." / "template.html").resolve()
     copy_static_to_public(static=STATIC_DIR, public=PUBLIC_DIR)
-    print(f"Generating page from {FROM_PATH} to {PUBLIC_DIR} using {TEMPLATE_PATH}")
-    generate_page(from_path=FROM_PATH, template_path=TEMPLATE_PATH, dest_path=DEST_PATH)
+    # print(f"Generating page from {FROM_PATH} to {PUBLIC_DIR} using {TEMPLATE_PATH}")
+    # generate_page(from_path=FROM_PATH, template_path=TEMPLATE_PATH, dest_path=DEST_PATH)
 
     
 
