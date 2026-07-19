@@ -53,7 +53,7 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
                 html_node = ParentNode(tag="p", children=html_children)
             case BlockType.QUOTE:
                 html_value = get_value(block_string=block, block_type=block_type)
-                html_children = text_to_children(block)
+                html_children = text_to_children(html_value)
                 html_node = ParentNode(tag="blockquote", children=html_children)
             case BlockType.UNORDERED_LIST | BlockType.ORDERED_LIST as list_type:
                 list_children = block.splitlines()
