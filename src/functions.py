@@ -101,3 +101,4 @@ def markdown_to_blocks(markdown):
         if blocks[i] == '':
             blocks.remove(blocks[i])
     return blocks
+

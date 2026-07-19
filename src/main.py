@@ -1,7 +1,8 @@
+from markdown_to_html_node import markdown_to_html_node
 import os
 from pathlib import Path
 import shutil
-
+import re
 
 def copy_static_to_public(static: Path, public: Path, public_deleted=False):
 
@@ -30,6 +31,36 @@ def delete_public_files(public):
         elif item.is_dir():
             shutil.rmtree(item)
 
+def extract_title(markdown):
+
+    pattern = r"#.+"
+    match = re.search(pattern, markdown)
+    print(match)
+
+    if match:
+        return match.group().replace("# ", "")
+    
+    raise ValueError("Error: markdown has no h1 header")
+
+def generate_page(from_path, template_path, dest_path):
+
+    with (
+        open(from_path) as from_path_file,
+        open(template_path) as template_path_file,
+    ):
+        from_path_contents = from_path_file.read()
+        template_path_contents = template_path_file.read()
+
+    md_to_html = markdown_to_html_node(from_path_contents).to_html()
+    title = extract_title(from_path_contents)
+    template_path_contents = template_path_contents.replace("{{ Title }}", title)
+    template_path_contents = template_path_contents.replace("{{ Content }}", md_to_html)
+    
+    with open(dest_path, "w") as file:
+        file.write(template_path_contents)
+
+
+
 def main():
     # __file__ is a built in variable that automatically holds the path of the current .py script "main.py" in this case.
     # .resolve() Finds the aboslute, real path on your hard drive. It removes any confusing shortcuts or temporary locations.
@@ -43,7 +74,14 @@ def main():
     # This is so the final path becomes a clean, direct line
     STATIC_DIR = (script_dir / ".." / "static").resolve()
     PUBLIC_DIR = (script_dir / ".." / "public").resolve()
+    DEST_PATH = (script_dir / ".." / "public" / "index.html")
+    FROM_PATH = (script_dir / ".." / "content" / "index.md").resolve()
+    TEMPLATE_PATH = (script_dir / ".." / "template.html").resolve()
     copy_static_to_public(static=STATIC_DIR, public=PUBLIC_DIR)
+    print(f"Generating page from {FROM_PATH} to {PUBLIC_DIR} using {TEMPLATE_PATH}")
+    generate_page(from_path=FROM_PATH, template_path=TEMPLATE_PATH, dest_path=DEST_PATH)
+
+    
 
 
 
