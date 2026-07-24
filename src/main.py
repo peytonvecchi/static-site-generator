@@ -74,7 +74,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             if item.parent.name == "content":
                 temp_path = (dest_dir_path / f"{item.stem}.html")
             else:
-                temp_path = (dest_dir_path / item.parent / f"{item.stem}.html")
+                temp_path = (dest_dir_path / f"{item.stem}.html")
             
             md_to_html = markdown_to_html_node(md).to_html()
             title = extract_title(md)
@@ -83,8 +83,9 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
             with open(temp_path, "w") as file:
                 file.write(temp_file_content)
         elif item.is_dir():
-            pass
-            # generate_pages_recursive(dir_path_content=item, template_path=template_path, dest_dir_path=dest_dir_path)
+            os.mkdir(dest_dir_path / item.name)
+            print((dest_dir_path / item.name))
+            generate_pages_recursive(dir_path_content=item, template_path=template_path, dest_dir_path=(dest_dir_path / item.name))
             
             
 
